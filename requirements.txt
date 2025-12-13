@@ -2,4 +2,5 @@ flask
 gspread
 oauth2client
 gunicorn
+python-dotenv
 
