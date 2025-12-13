@@ -88,3 +88,9 @@
 </div>
 
 {% endblock %}
+
+
+<script>
+  // Remove parâmetros da URL (evita re-submissão ao dar F5)
+  history.replaceState(null, null, window.location.pathname);
+</script>

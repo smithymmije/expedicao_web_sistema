@@ -4,3 +4,5 @@ __pycache__/
 .vscode/
 credenciais.json
 *.log
+# arquivos auxiliares locais
+cria_usuarios.py
