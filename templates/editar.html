@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div class="row">
+    <div class="col-lg-10 col-xl-8 mx-auto">
+        <h2 class="mb-4 d-flex align-items-center">
+            <i class="bi bi-pencil-square me-2"></i> Editar Pedido <span class="text-primary fw-bold ms-1">#{{ pedido }}</span>
+        </h2>
+
+        {% if listas.setores %}
+        <datalist id="setores_sugeridos">
+            {% for setor in listas.setores %}
+                <option value="{{ setor }}">
+            {% endfor %}
+        </datalist>
+        {% endif %}
+
+        {% if listas.materiais %}
+        <datalist id="materiais_sugeridos">
+            {% for material in listas.materiais %}
+                <option value="{{ material }}">
+            {% endfor %}
+        </datalist>
+        {% endif %}
+
+        <form method="post" action="{{ url_for('salvar_itens', numero=pedido) }}" onsubmit="return enviar();" class="p-4 border rounded shadow-sm bg-light">
+            
+            <h3 class="mb-3 text-secondary">Informações Gerais</h3>
+            
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label for="solicitante" class="form-label">Solicitante <span class="text-danger">*</span></label>
+                    <input type="text" id="solicitante" name="solicitante" value="{{ info['Solicitante'] }}" class="form-control" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="setor" class="form-label">Setor</label>
+                    <input type="text" id="setor" name="setor" value="{{ info['Setor'] }}" list="setores_sugeridos" class="form-control">
+                </div>
+                
+                <div class="col-12">
+                    <label for="obs_geral" class="form-label">Observação Geral</label>
+                    <input type="text" id="obs_geral" name="obs_geral" value="{{ info['Obs-geral'] }}" class="form-control">
+                </div>
+            </div>
+
+            <h3 class="mt-4 mb-3 d-flex align-items-center">
+                <i class="bi bi-box me-2"></i> Itens
+            </h3>
+            
+            <div class="table-responsive">
+                <table id="tblItens" class="table table-bordered align-middle">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th style="width: 50%;">Material</th>
+                            <th style="width: 15%;">Qtde</th>
+                            <th style="width: 25%;">Obs item</th>
+                            <th style="width: 10%;" class="text-center">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in itens %}
+                        <tr class="item-row">
+                            <td>
+                                <input name="material_{{ loop.index0 }}" value="{{ i.Material }}" list="materiais_sugeridos" class="form-control form-control-sm" required>
+                            </td>
+                            <td>
+                                <input name="qtde_{{ loop.index0 }}" type="number" min="1" value="{{ i.Qtde }}" class="form-control form-control-sm" required>
+                            </td>
+                            <td>
+                                <input name="obs_item_{{ loop.index0 }}" value="{{ i['Obs-item'] }}" class="form-control form-control-sm">
+                            </td>
+                            <td class="text-center">
+                                <button type="button" onclick="removeItem(this)" class="btn btn-sm btn-outline-danger" title="Remover item">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="button" onclick="addItem()" class="btn btn-outline-primary mb-4">
+                <i class="bi bi-plus-circle-fill me-1"></i> Adicionar Item
+            </button>
+            <input type="hidden" name="total_itens" id="total_itens" value="{{ itens|length }}">
+
+            <hr>
+            
+            <div class="row g-3 align-items-end">
+                <div class="col-md-6">
+                    <label for="usuario" class="form-label">Quem está editando <span class="text-danger">*</span></label>
+                    <input type="text" id="usuario" name="usuario" placeholder="Seu nome" class="form-control" required>
+                </div>
+                
+                <div class="col-md-6 d-flex justify-content-end gap-2">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="bi bi-save me-1"></i> Salvar Alterações
+                    </button>
+                    <a href="{{ url_for('painel') }}" class="btn btn-outline-secondary btn-lg">
+                        <i class="bi bi-arrow-left-circle me-1"></i> Voltar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<input type="hidden" id="idx_base" value="{{ itens|length }}">
+
+<script>
+    let idx = parseInt(document.getElementById("idx_base").value);
+
+    function addItem(){
+        const tbody = document.querySelector("#tblItens tbody");
+        const tr = document.createElement("tr");
+        tr.classList.add('item-row'); 
+
+        tr.innerHTML = `
+            <td>
+                <input name="material_${idx}" list="materiais_sugeridos" class="form-control form-control-sm" required>
+            </td>
+            <td>
+                <input name="qtde_${idx}" type="number" min="1" class="form-control form-control-sm" required>
+            </td>
+            <td>
+                <input name="obs_item_${idx}" class="form-control form-control-sm">
+            </td>
+            <td class="text-center">
+                <button type="button" onclick="removeItem(this)" class="btn btn-sm btn-outline-danger" title="Remover item">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </td>`;
+            
+        tbody.appendChild(tr);
+        document.getElementById("total_itens").value = document.querySelectorAll("#tblItens tbody tr").length;
+        idx++;
+    }
+
+    function removeItem(btn){
+        btn.closest("tr").remove();
+        document.getElementById("total_itens").value = document.querySelectorAll("#tblItens tbody tr").length;
+    }
+    
+    function enviar(){
+        return true; 
+    }
+</script>
+
+{% endblock %}

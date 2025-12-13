@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Controle de Expedição{% endblock %}
+
+{% block conteudo %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-lg border-0 rounded-lg">
+            <div class="card-header bg-dark text-white text-center">
+                <h3 class="fw-light my-4">
+                    <i class="bi bi-person-circle me-2"></i> Acesso ao Sistema
+                </h3>
+            </div>
+            <div class="card-body">
+                
+                <form method="POST" action="{{ url_for('login') }}">
+                    
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="username" name="username" type="text" placeholder="Seu nome de usuário" required autofocus />
+                        <label for="username">Usuário (ID)</label>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="password" name="password" type="password" placeholder="Sua senha" required />
+                        <label for="password">Senha</label>
+                    </div>
+                    
+                    <p class="text-center small text-muted mt-4">
+                        
+                    </p>
+
+                    <div class="d-grid mt-4">
+                        <button class="btn btn-primary btn-lg" type="submit">
+                            <i class="bi bi-box-arrow-in-right me-2"></i> Entrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center py-3 bg-light">
+                <div class="small">
+                    Mantenha suas credenciais seguras.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4 d-flex align-items-center">
+            <i class="bi bi-list-columns-reverse me-2"></i> Itens do Pedido <span class="text-primary fw-bold ms-1">#{{ pedido }}</span>
+        </h2>
+
+        <div class="table-responsive shadow-sm border rounded">
+            <table class="table table-bordered table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 5%;">#</th>
+                        <th style="width: 30%;">Material</th>
+                        <th style="width: 10%;" class="text-center">Qtde</th>
+                        <th style="width: 30%;">Observação do Item</th>
+                        <th style="width: 15%;">Solicitante</th>
+                        <th style="width: 10%;">Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for i in itens %}
+                    <tr>
+                        <td>{{ i.Item }}</td>
+                        <td class="fw-bold">{{ i.Material }}</td>
+                        <td class="text-center">
+                            <span class="badge bg-info text-dark">{{ i.Qtde }}</span>
+                        </td>
+                        <td class="small text-muted">{{ i["Obs-item"] or "-" }}</td>
+                        <td>{{ i.Solicitante }}</td>
+                        <td class="small">{{ i.Data }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4">
+            <a href="{{ url_for('painel') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left-circle-fill me-1"></i> Voltar ao Painel
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

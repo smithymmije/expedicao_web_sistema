@@ -1,0 +1,48 @@
+/*
+ * style.css
+ * Tema Customizado para o Controle de Expedição
+ */
+
+/* 1. RESET/NORMALIZAÇÃO BÁSICA (Box-Sizing Universal)
+ * Isso garante que padding e border sejam incluídos dentro da largura/altura total
+ * de um elemento, simplificando o cálculo de layouts responsivos.
+ * O Bootstrap já define isso, mas é bom para redundância e para novos elementos.
+ */
+ *, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 2. VARIÁVEIS DE COR E TIPOGRAFIA (Customizando o Bootstrap Theme) */
+:root {
+    /* Mudar a cor principal (usada em botões .btn-primary, links, etc.) */
+    --bs-primary: #1f2937; /* Cinza escuro da sua antiga header */
+    --bs-primary-rgb: 31, 41, 55;
+    
+    /* Mudar a cor de fundo do cabeçalho (usada no .bg-dark da Navbar) */
+    --bs-dark: #1f2937;
+    --bs-dark-rgb: 31, 41, 55;
+
+    /* Cor de fundo da página principal */
+    --bs-body-bg: #f4f6f8; 
+    
+    /* Fontes */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 3. AJUSTES GERAIS */
+
+.form-control:focus {
+    /* Personaliza o anel de foco do Bootstrap com a sua cor primária */
+    box-shadow: 0 0 0 0.25rem rgba(31, 41, 55, 0.25); 
+    border-color: #374151; 
+}
+
+/* Garante que os inputs internos da tabela de itens sejam compactos */
+#tblItens .form-control-sm {
+    height: calc(1.5em + 0.5rem + 2px); 
+}
+
+/* Ajuste para o Link Voltar em telas menores */
+.btn-lg {
+    white-space: nowrap; 
+}

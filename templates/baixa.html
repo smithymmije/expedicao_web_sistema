@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Dar Baixa no Pedido</h2>
+        </div>
+        <div class="card-body">
+            <p class="lead"><strong>Número do Pedido:</strong> <span class="badge bg-secondary">{{ pedido }}</span></p>
+
+            <form method="post">
+                
+                <div class="mb-3">
+                    <label for="retirado_por" class="form-label">Nome de quem Retirou</label>
+                    <input name="retirado_por" id="retirado_por" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="conferido_por" class="form-label">Conferido por (Responsável pela Expedição)</label>
+                    <input name="conferido_por" id="conferido_por" class="form-control" 
+                           value="{{ current_user.name }}" required>
+                    </div>
+
+                <button type="submit" class="btn btn-success mt-3">
+                    <i class="bi bi-check-circle-fill"></i> Confirmar Retirada e Baixa
+                </button>
+                <a href="{{ url_for('painel') }}" class="btn btn-secondary mt-3">
+                    Voltar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
